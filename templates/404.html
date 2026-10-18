@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Not found{% endblock %}
+{% block content %}<section class="auth-wrap"><div class="auth-card text-center"><div class="icon-bubble">?</div><h1>Page not found</h1><p class="muted">This page or record may not exist, or you may not have access to it.</p><a class="button button-primary" href="{{ url_for('records') if current_user else url_for('login') }}">Go back</a></div></section>{% endblock %}

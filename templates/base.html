@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}UserHub{% endblock %} · UserHub</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script defer src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+  <header class="navbar">
+    <a class="brand" href="{{ url_for('records') if current_user else url_for('login') }}">
+      <span class="brand-mark">U</span><span>UserHub</span>
+    </a>
+    {% if current_user %}
+    <div class="nav-user">
+      {% if current_user.profile_photo %}
+        <img class="avatar" src="{{ url_for('static', filename=current_user.profile_photo) }}" alt="Profile photo">
+      {% else %}
+        <span class="avatar avatar-placeholder">{{ current_user.full_name[:1]|upper }}</span>
+      {% endif %}
+      <span class="nav-name">{{ current_user.full_name }}</span>
+      <form action="{{ url_for('logout') }}" method="post" class="inline-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="button button-ghost button-small" type="submit">Log out</button>
+      </form>
+    </div>
+    {% else %}
+    <nav class="nav-links"><a href="{{ url_for('login') }}">Login</a><a href="{{ url_for('register') }}">Register</a></nav>
+    {% endif %}
+  </header>
+
+  <main class="page-main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <section class="flash-stack" aria-live="polite">
+        {% for category, message in messages %}
+          <div class="flash flash-{{ category }}"><span>{{ message }}</span><button type="button" class="flash-close" aria-label="Dismiss message">×</button></div>
+        {% endfor %}
+      </section>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">© {{ now_year }} UserHub. All rights reserved.</footer>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ mode }} user{% endblock %}
+{% block content %}
+<section class="content-wrap form-page">
+  <a class="back-link" href="{{ url_for('records') }}">← Back to records</a>
+  <div class="form-panel">
+    <div class="eyebrow">USER MANAGEMENT</div><h1>{{ mode }} user record</h1><p class="muted">Enter the details below. Fields marked required must be completed.</p>
+    <form method="post" enctype="multipart/form-data" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-grid">
+        <label>Full name<input name="name" required maxlength="100" value="{{ record.name if record else '' }}" placeholder="Enter full name"></label>
+        <label>Age<input type="number" name="age" min="0" max="120" required value="{{ record.age if record else '' }}" placeholder="Age"></label>
+        <label>City<input name="city" required maxlength="100" value="{{ record.city if record else '' }}" placeholder="City"></label>
+        <label>Number<input name="number" required maxlength="30" value="{{ record.number if record else '' }}" placeholder="Phone or contact number"></label>
+        <label>Role<select name="role" required>{% for role in roles %}<option value="{{ role }}" {% if record and record.role == role %}selected{% endif %}>{{ role }}</option>{% endfor %}</select></label>
+        <label>Place<select name="place" required>{% for place in places %}<option value="{{ place }}" {% if record and record.place == place %}selected{% endif %}>{{ place }}</option>{% endfor %}</select></label>
+        <label class="full-span">User photo <span class="muted">(JPG, PNG, WEBP; max 5 MB)</span><input type="file" name="photo" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"></label>
+      </div>
+      {% if record and record.photo %}<div class="current-photo"><img class="record-avatar" src="{{ url_for('static', filename=record.photo) }}" alt="Current user photo"><span class="muted small">Current photo. Leave the upload blank to keep it.</span></div>{% endif %}
+      <div class="form-actions"><a class="button button-ghost" href="{{ url_for('records') }}">Cancel</a><button class="button button-primary" type="submit">{{ 'Save changes' if record else 'Save user' }}</button></div>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,6 @@
+Flask>=3.1,<4.0
+pymongo>=4.10,<5.0
+Flask-PyMongo>=2.3,<3.0
+Flask-WTF>=1.2,<2.0
+python-dotenv>=1.0,<2.0
+email-validator>=2.2,<3.0

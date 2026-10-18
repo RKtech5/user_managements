@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<section class="auth-wrap auth-wrap-wide">
+  <div class="auth-card">
+    <div class="eyebrow">GET STARTED</div><h1>Create your account</h1>
+    <p class="muted">Set up your profile to start managing records.</p>
+    <form method="post" enctype="multipart/form-data" class="form-stack">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="form-grid">
+        <label>Full name<input name="full_name" autocomplete="name" required maxlength="100" placeholder="Your full name"></label>
+        <label>Email address<input type="email" name="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+        <label>Phone number <span class="muted">(optional)</span><input name="phone" autocomplete="tel" maxlength="30" placeholder="+91 98765 43210"></label>
+        <label>Age <span class="muted">(optional)</span><input type="number" name="age" min="13" max="120" placeholder="Your age"></label>
+        <label>City <span class="muted">(optional)</span><input name="city" maxlength="100" placeholder="Your city"></label>
+        <label class="full-span">Profile photo <span class="muted">(JPG, PNG, WEBP; max 5 MB)</span><input type="file" name="profile_photo" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"></label>
+        <label>Password<input type="password" name="password" autocomplete="new-password" minlength="10" required placeholder="At least 10 characters"></label>
+        <label>Confirm password<input type="password" name="confirm_password" autocomplete="new-password" minlength="10" required placeholder="Enter it again"></label>
+      </div>
+      <button class="button button-primary button-wide" type="submit">Create account <span aria-hidden="true">→</span></button>
+    </form>
+    <p class="auth-bottom">Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+  </div>
+</section>
+{% endblock %}
